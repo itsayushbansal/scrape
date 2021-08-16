@@ -66,5 +66,5 @@ $ sudo apt install sqlite3
 
 ### **Run the Application**
 ```
-$ python3 main.py
+$ python3 scrape_web/main.py
 ```
