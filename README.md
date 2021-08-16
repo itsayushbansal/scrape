@@ -52,10 +52,9 @@ export USERNAME={{ PEPCO SIGNIN USERNAME }}
 export PASSWORD={{ PEPCO SIGNIN PASSWORD }}
 ```
 
->Set Environment variables:
+>Set Environment variables to terminal:
 ```
-export USERNAME={{ PEPCO SIGNIN USERNAME }}
-export PASSWORD={{ PEPCO SIGNIN PASSWORD }}
+source .env
 ```
 
 ### **Sqlite Setup**
