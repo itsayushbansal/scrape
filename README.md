@@ -9,7 +9,7 @@ Sqlite
 ```
 
 ### **Virtual Environment Setup**
->Open command prompt and cd to Desktop
+>Open terminal and cd to Desktop
 ```
 $ cd PATH_TO_DESKTOP
 ```
