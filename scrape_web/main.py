@@ -1,6 +1,7 @@
 # Packages with Python
 import json
 import pprint
+import sqlite3
 from collections import OrderedDict
 
 # Third Party Packages
@@ -77,6 +78,28 @@ def format_bill_info(data):
                         })
 
 
+def dump_to_db(data):
+    try:
+        conn = sqlite3.connect('scrape_web.db')
+        cur = conn.cursor()
+        # Create table if not exists
+        cur.execute('''CREATE TABLE IF NOT EXISTS pepco_bill_info
+                   (ID INTEGER PRIMARY KEY AUTOINCREMENT,last_payment_amount real, last_payment_date text, 
+                   bill_date text, due_by_date text, current_due_amount real,
+                   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)''')
+        # Insert a row of data
+        cur.execute("""INSERT INTO pepco_bill_info(last_payment_amount,last_payment_date,bill_date,due_by_date,
+                                                   current_due_amount) VALUES(?,?,?,?,?);""",
+                    (data['Last Payment'], data['Received'], data['Current Bill'], data['Due Date'],
+                     data['Total Amount Due'],))
+
+        # Save (commit) the changes
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        raise e
+
+
 if __name__ == "__main__":
 
     response = scrape_website()
@@ -86,3 +109,4 @@ if __name__ == "__main__":
         result = format_bill_info(data=response['data'])
         pp = pprint.PrettyPrinter(indent=1)
         pp.pprint(result)
+        dump_to_db(result)
